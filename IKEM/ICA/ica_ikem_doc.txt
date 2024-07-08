@@ -1,0 +1,3 @@
+ICA computed on 131 subjects - FOV check excluded 5 subjects
+from the original 136 before the analysis
+results obtained from ICASSO, temporal sorting 
