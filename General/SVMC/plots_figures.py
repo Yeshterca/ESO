@@ -98,17 +98,23 @@ def plot_roc(labels, probs):
 def betas_distribution(betas, c_numbers, path, no_hc):
 
     for i in range(len(c_numbers)):
-        n_hc, bins_hc, _ = plt.hist(x=betas[0:no_hc, i], bins=20, color='darkblue', alpha=0.5, rwidth=0.85, label='HC')
-        n_fes, bins_fes, _ = plt.hist(x=betas[no_hc+1:, i], bins=20, color='red', alpha=0.5, rwidth=0.85, label='FES')
+        hc = betas[0:no_hc, i]
+        fes = betas[no_hc+1:, i]
+        min_edge = min(np.min(hc), np.min(fes))
+        max_edge = max(np.max(hc), np.max(fes))
+        bins = np.linspace(min_edge, max_edge, 20)
+
+        n_hc, bins_hc, _ = plt.hist(x=hc, bins=bins, color='darkblue', alpha=0.5, rwidth=0.85, label='HC')
+        n_fes, bins_fes, _ = plt.hist(x=fes, bins=bins, color='red', alpha=0.5, rwidth=0.85, label='FES')
 
         y_max = np.max([np.max(n_hc), np.max(n_fes)]) + 1
 
-        plt.vlines(x=np.mean(betas[0:no_hc, i]), ymin=0, ymax=y_max,  colors='darkblue', linestyles='dashed', label='HC-mean')
-        plt.vlines(x=np.mean(betas[no_hc+1, i]), ymin=0, ymax=y_max, colors='red', linestyles='dashed', label='FES-mean')
+        plt.vlines(x=np.mean(hc), ymin=0, ymax=y_max,  colors='darkblue', linestyles='dashed', label='HC-mean')
+        plt.vlines(x=np.mean(fes), ymin=0, ymax=y_max, colors='red', linestyles='dashed', label='FES-mean')
         plt.xlabel('Beta values')
         plt.ylabel('Number of subjects')
         plt.title(f'Distribution of beta values, C: {c_numbers[i]}')
-        plt.savefig(os.path.join(path, f'betas_ditribution_C{c_numbers[i]}'))
+        plt.savefig(os.path.join(path, f'betas_distribution_C{c_numbers[i]}'))
         plt.legend()
         plt.show()
 

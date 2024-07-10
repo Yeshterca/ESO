@@ -1,14 +1,14 @@
 from ica_run import *
 
 ## SET VARIABLES FOR DATASETS, PERFORM CLASSIFICATION ON EACH DATASET SEPARATELY
-# dataset = 'ikem'
-# print(dataset)
-# no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem, directory_ica_ikem, path_ikem = set_vars(dataset)
-# features_ikem, labels_ikem, weights_ikem = ica_load_prep_data(directory_ica_ikem, no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem)
+dataset = 'ikem'
+print(dataset)
+no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem, directory_ica_ikem, path_ikem = set_vars(dataset)
+features_ikem, labels_ikem, weights_ikem = ica_load_prep_data(directory_ica_ikem, no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem)
 # acc_ica, sen_ica, spec_ica = ica_classify(features_ikem, labels_ikem, weights_ikem, 'linear')
 
 # plot the distribution of beta values for selected ICs
-#betas_distribution(features_ikem,  relevant_ics_ikem, path_ikem, no_hc_ikem)
+betas_distribution(features_ikem,  relevant_ics_ikem, path_ikem, no_hc_ikem)
 
 
 dataset = 'nudz'
