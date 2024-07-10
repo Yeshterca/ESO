@@ -42,20 +42,26 @@ def masking(betas_all, no_subjects):
     mask = np.ones_like(betas_all[0, :, :, :])
     count_nans = np.zeros_like(betas_all[0, :, :, :])
 
+    # create a mask that is 0 at every voxel, where any subject has a NaN value, otherwise 1
     for i in range(0, no_subjects):
         nan_mask = np.isnan(betas_all[i, :, :, :])
         count_nans = count_nans + nan_mask
     mask[count_nans > 0] = 0
 
+    # put 0 at every voxel, where a subject has a NaN value (betas kept)
     betas_nan0 = betas_all
     betas_nanout = np.isnan(betas_all)
     betas_nan0[betas_nanout] = 0
 
+    # multiplication of each subject (with replaced NaNs) with the mask
     betas = np.zeros_like(betas_all)
     for i in range(0, no_subjects):
         betas[i, :, :, :] = betas_nan0[i, :, :, :] * mask
 
+    # create alternative with high values in the background for clustering
     betas_LB = np.where(betas == 0., 10., betas)
+
+    # create alternative with NaN values in the background for normalization
     betas_NB = np.where(betas == 0., np.nan, betas)
 
     return betas_LB, betas, betas_NB

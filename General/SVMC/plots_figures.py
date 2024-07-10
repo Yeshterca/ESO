@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import roc_curve, auc
+import os
 
 # ROIS HISTOGRAM
 
@@ -92,6 +93,30 @@ def plot_roc(labels, probs):
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
     plt.show()
+
+
+def betas_distribution(betas, c_numbers, path, no_hc):
+
+    for i in range(len(c_numbers)):
+        n_hc, bins_hc, _ = plt.hist(x=betas[0:no_hc, i], bins=20, color='darkblue', alpha=0.5, rwidth=0.85, label='HC')
+        n_fes, bins_fes, _ = plt.hist(x=betas[no_hc+1:, i], bins=20, color='red', alpha=0.5, rwidth=0.85, label='FES')
+
+        y_max = np.max([np.max(n_hc), np.max(n_fes)]) + 1
+
+        plt.vlines(x=np.mean(betas[0:no_hc, i]), ymin=0, ymax=y_max,  colors='darkblue', linestyles='dashed', label='HC-mean')
+        plt.vlines(x=np.mean(betas[no_hc+1, i]), ymin=0, ymax=y_max, colors='red', linestyles='dashed', label='FES-mean')
+        plt.xlabel('Beta values')
+        plt.ylabel('Number of subjects')
+        plt.title(f'Distribution of beta values, C: {c_numbers[i]}')
+        plt.savefig(os.path.join(path, f'betas_ditribution_C{c_numbers[i]}'))
+        plt.legend()
+        plt.show()
+
+
+    # bin_centers = 0.5 * (bins[:-1] + bins[1:])
+    # plt.xticks(bin_centers, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
+
+    # plt.vlines(14, 0, 21, colors='red', linestyles='dashed', label='threshold')  #26.1, 48
 
 
 

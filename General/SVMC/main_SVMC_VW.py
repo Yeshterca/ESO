@@ -8,23 +8,23 @@ NO_SLICE = 55
 
 # ONE DATASET LOO
 # get variables
-# no_subjects, no_hc, no_fes, directory = set_vars('nudz')
-#
-# # load data, get features, classify
-# betas_LB, betas, betas_NB, labels, weights = vw_load_data(directory, 'beta_0001.nii', no_subjects, no_hc, no_fes)
-# predictions, probs = vw_LOO_cluster_classify(betas_LB, betas, betas_NB, labels, weights, no_subjects, NO_SEGMENTS, NO_SLICE, NO_FEATURES)
-#
-# np.save('labelsf18_nudz', labels)
-# np.save('probsf18_nudz.npy', probs)
-# np.save('predsf18_nudz.npy', predictions)
-#
-# # labels = np.load('labelsv01.npy')
-# # probs = np.load('probsv01.npy')
-# # predictions = np.load('predsv01.npy')
-#
-# # get performance
-# accuracy, sensitivity, specificity = get_measures(labels, predictions, weights)
-# plot_roc(labels, probs)
+no_subjects, no_hc, no_fes, directory = set_vars('nudz')
+
+# load data, get features, classify
+betas_LB, betas, betas_NB, labels, weights = vw_load_data(directory, 'beta_0001.nii', no_subjects, no_hc, no_fes)
+predictions, probs = vw_LOO_cluster_classify(betas_LB, betas, betas_NB, labels, weights, no_subjects, NO_SEGMENTS, NO_SLICE, NO_FEATURES)
+
+np.save('labelsf18_nudz', labels)
+np.save('probsf18_nudz.npy', probs)
+np.save('predsf18_nudz.npy', predictions)
+
+# labels = np.load('labelsv01.npy')
+# probs = np.load('probsv01.npy')
+# predictions = np.load('predsv01.npy')
+
+# get performance
+accuracy, sensitivity, specificity = get_measures(labels, predictions, weights)
+plot_roc(labels, probs)
 
 # TWO DATASETS
 # load data from both datasets

@@ -2,7 +2,7 @@ from get_data_ICA import *
 from model import *
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
-from plots_figures import plot_roc
+from plots_figures import *
 
 
 # LOAD AND PREPARE DATA FROM ICA
@@ -35,7 +35,8 @@ def set_vars(dataset):
         no_fes = 76
         relevant_ics = np.array([5, 7, 15, 16, 19, 20, 22, 24, 30, 31])
         no_features_ica = len(relevant_ics)
-        directory_ica = r'C:\Users\kajin\Desktop\PhD\ESO\IKEM\ICA\eso_temporal_regression.mat'
+        directory_ica = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\eso_temporal_regression.mat'
+        path_figures = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\betas_distributions'
 
     elif dataset == 'nudz':
         # GLOBALS NUDZ only
@@ -44,7 +45,8 @@ def set_vars(dataset):
         no_fes = 92
         relevant_ics = np.array([2, 3, 5, 13, 18, 22, 23, 30])
         no_features_ica = len(relevant_ics)
-        directory_ica = r'C:\Users\kajin\Desktop\PhD\ESO\NUDZ\ICA\NUDZ_only\eso_temporal_regression.mat'
+        directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\model_performance\NUDZ_only\eso_temporal_regression.mat'
+        path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\betas_distributions'
 
     elif dataset == 'merged':
         # GLOBALS IKEM + NUDZ
@@ -55,7 +57,7 @@ def set_vars(dataset):
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\Desktop\PhD\ESO\NUDZ\ICA\IKEM_NUDZ_merged\eso_temporal_regression.mat'
 
-    return no_subjects, no_hc, no_fes, relevant_ics, no_features_ica, directory_ica
+    return no_subjects, no_hc, no_fes, relevant_ics, no_features_ica, directory_ica, path_figures
 
 
 def shuffle_subjects(labels, weights, features):
