@@ -95,3 +95,53 @@ def ica_classify_otherdataset(ica_features_ikem, labels_ikem, weights_ikem, ica_
 
     return accuracy, sensitivity, specificity
 
+def group_means(hc_means, fes_means, dataset):
+
+    if dataset == 'ikem':
+        pos = np.array([0, 5, 6, 7, 9])
+        neg = np.array([1, 2, 3, 4, 8])
+    else:
+        pos = np.array([5, 6, 7])
+        neg = np.array([0, 1, 2, 3, 4])
+
+    pos_mean_hc = np.mean(hc_means[pos])
+    neg_mean_hc = np.mean(hc_means[neg])
+    pos_mean_fes = np.mean(fes_means[pos])
+    neg_mean_fes = np.mean(fes_means[neg])
+
+    return pos_mean_hc, neg_mean_hc, pos_mean_fes, neg_mean_fes
+
+
+def group_diff(pA_fes, nA_fes, pB_fes, nB_fes, pA_hc, nA_hc, pB_hc, nB_hc):
+
+    p_hc = np.abs(pA_hc - pB_hc)
+    p_fes = np.abs(pA_fes - pB_fes)
+    n_hc = np.abs(nA_hc - nB_hc)
+    n_fes = np.abs(nA_fes - nB_fes)
+
+    pos = np.mean([pA_hc, pA_fes]) - np.mean([pB_hc, pB_fes])
+    neg = np.mean([nA_hc, nA_fes]) - np.mean([nB_hc, nB_fes])
+
+    print('Diff: +r | HC: ', p_hc)
+    print('Diff: +r | FES: ', p_fes)
+    print('Diff: -r | HC: ', n_hc)
+    print('Diff: -r | FES: ', n_fes)
+
+    print('Diff: +r: ', pos)
+    print('Diff: -r: ', neg)
+
+    print('--------------')
+
+    diffA = (pA_hc - pA_fes) - (nA_hc - nA_fes)
+    diffB = (pB_hc - pB_fes) - (nB_hc - nB_fes)
+
+    print('Overall diff between datasets: ', diffA-diffB)
+
+
+
+    return p_hc, p_fes, n_hc, n_fes, pos, neg
+
+
+
+
+
