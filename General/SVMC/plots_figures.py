@@ -95,7 +95,7 @@ def plot_roc(labels, probs):
     plt.show()
 
 
-def betas_distribution(betas, c_numbers, path, no_hc):
+def betas_distribution_c(betas, c_numbers, path, no_hc):
 
     hc_means = np.zeros(len(c_numbers), )
     fes_means = np.zeros(len(c_numbers), )
@@ -124,14 +124,56 @@ def betas_distribution(betas, c_numbers, path, no_hc):
 
     return hc_means, fes_means
 
-    # bin_centers = 0.5 * (bins[:-1] + bins[1:])
-    # plt.xticks(bin_centers, labels=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15])
 
-    # plt.vlines(14, 0, 21, colors='red', linestyles='dashed', label='threshold')  #26.1, 48
+def betas_distribution_c(betas, c_numbers, path, no_hc):
 
+    betas_hc = (betas[0:no_hc, :]).flatten()
+    betas_fes = (betas[no_hc+1:, :]).flatten()
 
+    min_edge = min(np.min(betas_hc), np.min(betas_fes))
+    max_edge = max(np.max(betas_hc), np.max(betas_fes))
+    bins = np.linspace(min_edge, max_edge, 20)
 
+    n_hc, bins_hc, _ = plt.hist(x=betas_hc, bins=bins, color='red', alpha=0.5, rwidth=0.85, label='HC')
+    n_fes, bins_fes, _ = plt.hist(x=betas_fes, bins=bins, color='darkblue', alpha=0.5, rwidth=0.85, label='FES')
 
+    y_max = np.max([np.max(n_hc), np.max(n_fes)]) + 1
 
+    plt.vlines(x=np.mean(betas_hc), ymin=0, ymax=y_max,  colors='red', linestyles='dashed', label='HC-mean')
+    plt.vlines(x=np.mean(betas_fes), ymin=0, ymax=y_max, colors='darkblue', linestyles='dashed', label='FES-mean')
+    plt.xlabel('Beta values')
+    plt.ylabel('Frequency')
+    plt.title(f'Distribution of beta values, all C')
+    plt.legend()
+    plt.savefig(os.path.join(path, f'betas_distribution_allC'))
+    plt.show()
 
+def betas_distribution_vw(betas, no_hc, path):
+
+    betas_hc = betas[0:no_hc, :, :, :].flatten()
+    betas_fes = betas[no_hc+1:, :, :, :].flatten()
+
+    betas_hc = betas_hc[~np.isnan(betas_hc)]
+    betas_fes = betas_fes[~np.isnan(betas_fes)]
+
+    min_edge = min(np.min(betas_hc), np.min(betas_fes))
+    max_edge = max(np.max(betas_hc), np.max(betas_fes))
+    bins = np.linspace(min_edge, max_edge, 20)
+
+    n_hc, bins_hc, _ = plt.hist(x=betas_hc, bins=bins, color='red', alpha=0.5, rwidth=0.85, label='HC')
+    n_fes, bins_fes, _ = plt.hist(x=betas_fes, bins=bins, color='darkblue', alpha=0.5, rwidth=0.85, label='FES')
+
+    y_max = np.max([np.max(n_hc), np.max(n_fes)]) + 1
+
+    plt.vlines(x=np.mean(betas_hc), ymin=0, ymax=y_max,  colors='red', linestyles='dashed', label='HC-mean')
+    plt.vlines(x=np.mean(betas_fes), ymin=0, ymax=y_max, colors='darkblue', linestyles='dashed', label='FES-mean')
+    plt.xlabel('Beta values')
+    plt.ylabel('Frequency')
+    plt.title(f'Distribution of beta values')
+    plt.legend()
+    plt.savefig(os.path.join(path, f'betas_distribution'))
+    plt.show()
+
+    print(np.mean(betas_hc))
+    print(np.mean(betas_fes))
 

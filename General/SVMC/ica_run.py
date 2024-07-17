@@ -23,7 +23,7 @@ def ica_load_prep_data(directory, no_subjects, no_hc, no_fes, relevant_ics, no_c
     # normalization
     features_ica = z_score_normalize(ic_betas_selected.T, no_hc)
 
-    return features_ica, labels, weights
+    return features_ica, labels, weights, ic_betas_selected.T
 
 
 # SET VARIABLES BASED ON THE DATASET
@@ -36,7 +36,7 @@ def set_vars(dataset):
         relevant_ics = np.array([5, 7, 15, 16, 19, 20, 22, 24, 30, 31])
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\eso_temporal_regression.mat'
-        path_figures = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\betas_distributions'
+        path_figures = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\betas_distributions_or'
 
     elif dataset == 'nudz':
         # GLOBALS NUDZ only
@@ -46,7 +46,7 @@ def set_vars(dataset):
         relevant_ics = np.array([2, 3, 5, 13, 18, 22, 23, 30])
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\model_performance\NUDZ_only\eso_temporal_regression.mat'
-        path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\betas_distributions'
+        path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\betas_distributions_or'
 
     elif dataset == 'merged':
         # GLOBALS IKEM + NUDZ
@@ -142,6 +142,10 @@ def group_diff(pA_fes, nA_fes, pB_fes, nB_fes, pA_hc, nA_hc, pB_hc, nB_hc):
     return p_hc, p_fes, n_hc, n_fes, pos, neg
 
 
+def unmix(dir_matrix, data, no_hc):
 
+    centered_data = z_score_normalize(data, no_hc)
+    W = dir_matrix.W
+    components = W * centered_data
 
 

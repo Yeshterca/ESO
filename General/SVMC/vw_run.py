@@ -183,6 +183,7 @@ def set_vars(dataset):
         no_hc = 55
         no_fes = 76
         directory_vw = r'C:\Users\kajin\Documents\_\3\Thesis\ESO\eso\VOXEL-WISE\1st_level_fovselected5'
+        directory_figures = r'C:\Users\kajin\PhD\ESO\IKEM\VW\betas_distributions'
 
     elif dataset == 'nudz':
         # GLOBALS NUDZ
@@ -190,8 +191,9 @@ def set_vars(dataset):
         no_hc = 66
         no_fes = 92
         directory_vw = r'C:\Users\kajin\Documents\_\3\Thesis\ESO\eso\data_nudz\NUDZ_vw\1st_level'
+        directory_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\VW\betas_distributions'
 
-    return no_subjects, no_hc, no_fes, directory_vw
+    return no_subjects, no_hc, no_fes, directory_vw, directory_figures
 
 
 
