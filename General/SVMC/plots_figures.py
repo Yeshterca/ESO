@@ -95,7 +95,7 @@ def plot_roc(labels, probs):
     plt.show()
 
 
-def betas_distribution_c(betas, c_numbers, path, no_hc):
+def betas_distributions_c(betas, c_numbers, path, no_hc):
 
     hc_means = np.zeros(len(c_numbers), )
     fes_means = np.zeros(len(c_numbers), )
@@ -118,8 +118,8 @@ def betas_distribution_c(betas, c_numbers, path, no_hc):
         plt.xlabel('Beta values')
         plt.ylabel('Number of subjects')
         plt.title(f'Distribution of beta values, C: {c_numbers[i]}')
-        plt.savefig(os.path.join(path, f'betas_distribution_C{c_numbers[i]}'))
         plt.legend()
+        plt.savefig(os.path.join(path, f'betas_distribution_C{c_numbers[i]}'))
         plt.show()
 
     return hc_means, fes_means
@@ -176,4 +176,42 @@ def betas_distribution_vw(betas, no_hc, path):
 
     print(np.mean(betas_hc))
     print(np.mean(betas_fes))
+
+
+def betas_distributions_compare(betas_A, betas_B, c_numbers, path, no_hc_A, no_hc_B):
+
+    for i in range(len(c_numbers)):
+        hc_A = betas_A[0:no_hc_A, i]
+        fes_A = betas_A[no_hc_A + 1:, i]
+        hc_B = betas_B[0:no_hc_B, i]
+        fes_B = betas_B[no_hc_B + 1:, i]
+
+        datasets = [hc_A, hc_B, fes_A, fes_B]
+        titles = ['HC-IKEM', 'HC-NUDZ', 'FES-IKEM', 'FES-NUDZ']
+
+        min_A = min(np.min(hc_A), np.min(fes_A))
+        min_B = min(np.min(hc_B), np.min(fes_B))
+        max_A = max(np.max(hc_A), np.max(fes_A))
+        max_B = max(np.max(hc_B), np.max(fes_B))
+        min_edge = min(min_A, min_B)
+        max_edge = max(max_A, max_B)
+
+        bins = np.linspace(min_edge, max_edge, 30)
+
+        fig, axs = plt.subplots(2, 2)
+
+        for ax, data, title in zip(axs.ravel(), datasets, titles):
+            counts, bins, patches = ax.hist(data, bins=bins, color='darkblue', rwidth=0.85, density=True)
+            mean_val = np.mean(data)
+
+            ax.axvline(mean_val, color='red', linestyle='dashed')
+            ax.set_title(title)
+            ax.set_xlabel('Beta values')
+            ax.set_ylabel('Number of subjects')
+            ax.set_ylim(0, 1)
+
+        plt.subplots_adjust(wspace=0.4, hspace=0.6)
+        fig.suptitle(f'Distribution of beta values, C: {c_numbers[i]}')
+        plt.savefig(os.path.join(path, f'betas_distribution_C{c_numbers[i]}'))
+        plt.show()
 

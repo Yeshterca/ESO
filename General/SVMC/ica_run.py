@@ -55,7 +55,8 @@ def set_vars(dataset):
         no_fes = 168
         relevant_ics = np.array([5, 6, 8, 17, 18, 20, 21, 22, 26, 31, 34])
         no_features_ica = len(relevant_ics)
-        directory_ica = r'C:\Users\kajin\Desktop\PhD\ESO\NUDZ\ICA\IKEM_NUDZ_merged\eso_temporal_regression.mat'
+        directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA_merged_datasets\eso_temporal_regression.mat'
+        path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA_merged_datasets\betas_distributions'
 
     return no_subjects, no_hc, no_fes, relevant_ics, no_features_ica, directory_ica, path_figures
 
