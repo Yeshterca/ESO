@@ -5,7 +5,7 @@ import numpy as np
 
 def get_ica_data(directory):
     """
-    Gets the beta values of all components obtained from ICA from .mat file.
+    Get beta values of all components obtained from ICA from .mat file.
     :param directory: path to .mat file with temporal regression results
     :return: components_numbers = vector of sorted components' numbers,
              betas_all = 2D array of beta values (all patients, all components)
