@@ -43,7 +43,7 @@ def set_vars(dataset):
         no_subjects = 158
         no_hc = 66
         no_fes = 92
-        relevant_ics = np.array([2, 3, 5, 13, 18, 22, 23, 30])
+        relevant_ics = np.array([2, 3, 12, 18, 22, 23, 30])
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\model_performance\NUDZ_only\eso_temporal_regression.mat'
         path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\betas_distributions_or'

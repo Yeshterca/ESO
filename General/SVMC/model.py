@@ -162,7 +162,7 @@ def ica_LOO_cross_validation(betas, labels, weights, kernel):
         labels_train = np.delete(labels, fold)
         weights_train = np.delete(weights, fold)
 
-        betas_val = betas[fold, :]
+        betas_val = betas[fold]
         betas_val = betas_val.reshape(1, -1)
 
         prediction, prob = svm_classifier(betas_train, labels_train, weights_train, betas_val, kernel)
