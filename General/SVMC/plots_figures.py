@@ -180,6 +180,7 @@ def betas_distribution_vw(betas, no_hc, path):
 
 def betas_distributions_compare(betas_A, betas_B, c_numbers, path, no_hc_A, no_hc_B):
 
+    titles = ['HC-IKEM', 'HC-NUDZ', 'FES-IKEM', 'FES-NUDZ']
     for i in range(len(c_numbers)):
         hc_A = betas_A[0:no_hc_A, i]
         fes_A = betas_A[no_hc_A + 1:, i]
@@ -187,7 +188,6 @@ def betas_distributions_compare(betas_A, betas_B, c_numbers, path, no_hc_A, no_h
         fes_B = betas_B[no_hc_B + 1:, i]
 
         datasets = [hc_A, hc_B, fes_A, fes_B]
-        titles = ['HC-IKEM', 'HC-NUDZ', 'FES-IKEM', 'FES-NUDZ']
 
         min_A = min(np.min(hc_A), np.min(fes_A))
         min_B = min(np.min(hc_B), np.min(fes_B))
@@ -214,4 +214,34 @@ def betas_distributions_compare(betas_A, betas_B, c_numbers, path, no_hc_A, no_h
         fig.suptitle(f'Distribution of beta values, C: {c_numbers[i]}')
         plt.savefig(os.path.join(path, f'betas_distribution_C{c_numbers[i]}'))
         plt.show()
+
+
+def plot_pdf_cdf(betas_A, betas_B, no_hc_A, no_hc_B, c_numbers, path):
+
+    titles = ["HC-IKEM", "HC-NUDZ", "FES-IKEM", "FES-NUDZ"]
+    plt.figure()
+    for i in range(len(c_numbers)):
+        hc_A = betas_A[0:no_hc_A, i]
+        fes_A = betas_A[no_hc_A + 1:, i]
+        hc_B = betas_B[0:no_hc_B, i]
+        fes_B = betas_B[no_hc_B + 1:, i]
+
+        datasets = [hc_A, hc_B, fes_A, fes_B]
+        x = 0
+        for data in zip(datasets):
+            counts, bins = np.histogram(data, bins=30)
+            pdf = counts / np.sum(counts)
+            cdf = np.cumsum(pdf)
+
+            plt.plot(cdf, label=titles[x])
+            x = x+1
+
+        plt.legend()
+        plt.savefig(os.path.join(path, f'cdf_betas_C{c_numbers[i]}'))
+        plt.title(f'CDF of beta values for C:  {c_numbers[i]}')
+        plt.savefig(os.path.join(path, f'cdf_betas_C{c_numbers[i]}'))
+        plt.show()
+
+
+    return pdf, cdf
 

@@ -37,6 +37,7 @@ def set_vars(dataset):
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\eso_temporal_regression.mat'
         path_figures = r'C:\Users\kajin\PhD\ESO\IKEM\ICA\betas_distributions_or'
+        path_cdf = 0
 
     elif dataset == 'nudz':
         # GLOBALS NUDZ only
@@ -47,6 +48,7 @@ def set_vars(dataset):
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\model_performance\NUDZ_only\eso_temporal_regression.mat'
         path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA\betas_distributions_or'
+        path_cdf = 0
 
     elif dataset == 'merged':
         # GLOBALS IKEM + NUDZ
@@ -57,8 +59,9 @@ def set_vars(dataset):
         no_features_ica = len(relevant_ics)
         directory_ica = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA_merged_datasets\eso_temporal_regression.mat'
         path_figures = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA_merged_datasets\betas_distributions'
+        path_cdf = r'C:\Users\kajin\PhD\ESO\NUDZ\ICA_merged_datasets\betas_distributions\CDFs'
 
-    return no_subjects, no_hc, no_fes, relevant_ics, no_features_ica, directory_ica, path_figures
+    return no_subjects, no_hc, no_fes, relevant_ics, no_features_ica, directory_ica, path_figures, path_cdf
 
 
 def shuffle_subjects(labels, weights, features):

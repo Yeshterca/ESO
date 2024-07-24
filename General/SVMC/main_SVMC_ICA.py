@@ -3,7 +3,7 @@ from ica_run import *
 ## SET VARIABLES FOR DATASETS, PERFORM CLASSIFICATION ON EACH DATASET SEPARATELY
 dataset = 'ikem'
 print(dataset)
-no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem, directory_ica_ikem, path_ikem = set_vars(dataset)
+no_subjects_ikem, no_hc_ikem, no_fes_ikem, relevant_ics_ikem, no_features_ica_ikem, directory_ica_ikem, path_ikem, path_cdf = set_vars(dataset)
 features_ikem, labels_ikem, weights_ikem, features_or_ikem = ica_load_prep_data(directory_ica_ikem, no_subjects_ikem,
                                                                                 no_hc_ikem, no_fes_ikem, relevant_ics_ikem,
                                                                                 no_features_ica_ikem)
@@ -16,7 +16,7 @@ acc_ica, sen_ica, spec_ica = ica_classify(features_ikem, labels_ikem, weights_ik
 dataset = 'nudz'
 print('\n')
 print(dataset)
-no_subjects_nudz, no_hc_nudz, no_fes_nudz, relevant_ics_nudz, no_features_ica_nudz, directory_ica_nudz, path_nudz = set_vars(dataset)
+no_subjects_nudz, no_hc_nudz, no_fes_nudz, relevant_ics_nudz, no_features_ica_nudz, directory_ica_nudz, path_nudz, path_cdf = set_vars(dataset)
 features_nudz, labels_nudz, weights_nudz, features_or_nudz = ica_load_prep_data(directory_ica_nudz, no_subjects_nudz,
                                                                                 no_hc_nudz, no_fes_nudz, relevant_ics_nudz,
                                                                                 no_features_ica_nudz)
@@ -30,21 +30,22 @@ acc_ica, sen_ica, spec_ica = ica_classify(features_nudz, labels_nudz, weights_nu
 
 
 ### CLASSIFY NUDZ USING IKEM, ICA COMPUTED ON MERGED DATASETS
-no_subjects_nudz, no_hc_nudz, no_fes_nudz, relevant_ics_nudz, no_features_ica_nudz, directory_ica_nudz, path_merged = set_vars('merged')
+no_subjects_nudz, no_hc_nudz, no_fes_nudz, relevant_ics_nudz, no_features_ica_nudz, directory_ica_nudz, path_merged, path_cdf = set_vars('merged')
 ica_features, labels, weights, features_or_merged = ica_load_prep_data(directory_ica_nudz, no_subjects_nudz, no_hc_nudz,
                                                                        no_fes_nudz, relevant_ics_nudz, no_features_ica_nudz)
 
 # plot distributions of beta values for selected ICs
-#mfeatures_ikem = ica_features[0:131, :]
-#mfeatures_nudz = ica_features[132:, :]
+mfeatures_ikem = ica_features[0:131, :]
+mfeatures_nudz = ica_features[132:, :]
 
-#path_merged_ikem = os.path.join(path_merged, 'ikem')
-#path_merged_nudz = os.path.join(path_merged, 'nudz')
+path_merged_ikem = os.path.join(path_merged, 'ikem')
+path_merged_nudz = os.path.join(path_merged, 'nudz')
 
-#no_hc_mikem = 55
-#no_hc_mnudz = 66
+no_hc_mikem = 55
+no_hc_mnudz = 66
 
 #betas_distributions_compare(mfeatures_ikem, mfeatures_nudz, relevant_ics_nudz, path_merged, no_hc_mikem, no_hc_mnudz)
+plot_pdf_cdf(mfeatures_ikem, mfeatures_nudz, no_hc_mikem, no_hc_mnudz, relevant_ics_nudz, path_cdf)
 
 #betas_distributions_c(mfeatures_ikem, relevant_ics_nudz, path_merged_ikem, no_hc_mikem)
 #betas_distributions_c(mfeatures_nudz, relevant_ics_nudz, path_merged_nudz, no_hc_mnudz)
