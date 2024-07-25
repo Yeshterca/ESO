@@ -8,7 +8,7 @@ NO_SLICE = 55
 
 # ONE DATASET LOO
 # get variables
-no_subjects, no_hc, no_fes, directory, path = set_vars('nudz')
+no_subjects, no_hc, no_fes, directory, path = set_vars('ikem')
 
 # load data, get features, classify
 betas_LB, betas, betas_NB, labels, weight = vw_load_data(directory, 'beta_0001.nii', no_subjects, no_hc, no_fes)
