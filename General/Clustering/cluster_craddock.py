@@ -84,7 +84,7 @@ time_series = get_rois(masker, dirlist)
 coeffs = get_betas(time_series, time_experiment)
 print(np.shape(coeffs))
 
-components = perform_pca(coeffs, 2)
+components = perform_pca(coeffs, 3)
 
 print(components)
 
