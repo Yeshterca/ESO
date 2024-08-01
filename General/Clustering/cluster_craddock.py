@@ -1,6 +1,4 @@
 from nilearn import datasets, image, input_data, plotting
-import nibabel as nib
-import os
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.decomposition import PCA
@@ -10,7 +8,9 @@ import h5py
 
 def load_atlas(clusters_slice, parc_type):
 
-    atlas = datasets.fetch_atlas_craddock_2012()[parc_type]
+    #atlas = datasets.fetch_atlas_craddock_2012()[parc_type]
+        # url=r"C:\Users\kajin\PhD\Craddock\craddock_2011_parcellations.tar.gz"
+    atlas = r"C:\Users\kajin\PhD\Craddock\craddock_2011_parcellations\tcorr05_mean_all.nii\tcorr05_mean_all.nii"
     parcellation = image.index_img(atlas, clusters_slice)
 
     masker = input_data.NiftiLabelsMasker(labels_img=parcellation, standardize=True, memory='nilearn_cache')
@@ -87,5 +87,7 @@ print(np.shape(coeffs))
 components = perform_pca(coeffs, 3)
 
 print(components)
+
+# TODO perform z-score normalization of the data
 
 
