@@ -21,7 +21,7 @@ def ica_load_prep_data(directory, no_subjects, no_hc, no_fes, relevant_ics, no_c
     weights = get_weights(labels)
 
     # normalization
-    features_ica = z_score_normalize(ic_betas_selected.T, no_hc)
+    features_ica = z_score_normalize(ic_betas_selected.T, no_hc)  # TODO move to LOOCV
 
     return features_ica, labels, weights, ic_betas_selected.T
 
