@@ -58,7 +58,6 @@ def get_rois(masker, dirlist):
                 time_series = masker.fit_transform(file)
                 time_series_all = np.zeros((time_series.shape[0], time_series.shape[1], no_subjects))
                 time_series_all[:, :, 0] = time_series
-                print(np.shape(time_series_all))
             else:
                 time_series_all[:, :, i] = masker.fit_transform(file)
             i += 1
