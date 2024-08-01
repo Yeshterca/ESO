@@ -15,7 +15,7 @@ def set_vars(dataset):
         no_hc = 55
         no_fes = 76
         no_features = 10
-        clusters_slice = 20
+        clusters_slice = 10
         subjects_list = r'/home/karolina.volfikova/Documents/ESO/datalists/IKEM/subs_dirs_fov5.txt'
 
     spm_dir = r'/home/karolina.volfikova/Documents/ESO/SPM_matrix/ICA_240/SPM.mat'
@@ -141,7 +141,7 @@ def data_split(features, labels, weights, index):
     weights_train = np.delete(weights, index)
 
     features_val = features[index]
-    features_val.reshape(1, -1)
+    features_val = features_val.reshape(1, -1)
 
     return features_train, labels_train, weights_train, features_val
 
