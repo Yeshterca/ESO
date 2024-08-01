@@ -14,7 +14,7 @@ def load_atlas(clusters_slice, parc_type):
     parcellation = image.index_img(atlas, clusters_slice)
 
     masker = input_data.NiftiLabelsMasker(labels_img=parcellation, standardize=True, memory='nilearn_cache')
-    #plotting.plot_roi(parcellation)
+    plotting.plot_roi(parcellation)
 
     return masker
 
