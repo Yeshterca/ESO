@@ -1,4 +1,4 @@
-from vw_craddock_run import *
+from craddock_run import *
 
 # Get data
 no_subjects, no_hc, no_fes, no_features, clusters_slice, subjects_list, spm_dir, atlas_dir = set_vars('ikem')
@@ -9,6 +9,6 @@ np.save('betas_craddock.npy', betas)
 labels, weights = load_prep_data(no_hc, no_fes)
 
 # Perform classification, LOOCV
-accuracy, sensitivity, speicificity = vw_classify_craddock(betas, labels, weights, 'linear', no_features)
+accuracy, sensitivity, speicificity = classify_craddock(betas, labels, weights, 'linear', no_features, no_hc)
 
 

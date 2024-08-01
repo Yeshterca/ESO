@@ -98,18 +98,18 @@ def load_prep_data(no_hc, no_fes):
     return labels, weights
 
 
-def vw_classify_craddock(features, labels, weights, kernel, no_features):
+def classify_craddock(features, labels, weights, kernel, no_features, no_hc):
 
-    predictions, probs = vw_LOOCV(features, labels, weights, kernel, no_features)
+    predictions, probs = LOOCV_craddock(features, labels, weights, kernel, no_features, no_hc)
 
-    print('--- VW-CLASSIFICATION ---')
+    print('--- Craddock-CLASSIFICATION ---')
     accuracy, sensitivity, specificity = get_measures(labels, predictions, weights)
     plot_roc(labels, probs)
 
     return accuracy, sensitivity, specificity
 
 
-def vw_LOOCV(betas, labels, weights, kernel, no_features):
+def LOOCV_craddock(betas, labels, weights, kernel, no_features, no_hc):
 
     folds = len(labels)
     predictions = np.zeros((folds,))
@@ -120,7 +120,8 @@ def vw_LOOCV(betas, labels, weights, kernel, no_features):
         betas_train, labels_train, weights_train, betas_val = data_split(betas, labels, weights, fold)
 
         # Normalize
-        # TODO
+        betas_train, mean, sd = normalize(betas_train, no_hc)
+        betas_val = (betas_val-mean)/sd
 
         # Perform PLS
         features_train, features_val = pls(betas_train, labels_train, betas_val, no_features)
@@ -156,5 +157,25 @@ def pls(betas_train, labels_train, betas_val, no_features):
     features_val = pls.transform(betas_val)
 
     return features_train, features_val
+
+
+def normalize(data, no_hc):
+
+    data_hc = data[0:no_hc, :]
+    data_fes = data[no_hc:, :]
+
+    mean_hc = np.mean(data_hc)
+    sd_hc = np.std(data_hc)
+
+    mean_fes = np.mean(data_fes)
+    sd_fes = np.std(data_fes)
+
+    mean = np.mean((mean_hc, mean_fes))
+    sd = np.std((sd_hc, sd_fes))
+
+    normalized_data = (data-mean)/sd
+
+    return normalized_data, mean, sd
+
 
 
